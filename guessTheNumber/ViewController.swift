@@ -38,16 +38,32 @@ class ViewController: UIViewController {
     
     func validateGuess(_ guess: Int) {
         if guess < lowerBound || guess > upperBound {
-            print("Your guess should be between 1 and 100!")
+            showBoundsAlert()
         } else if guess < numberToGuess {
-            print("Higher!")
+            guessLabel.text = "Higher! ⬆️"
         } else if guess > numberToGuess {
-            print("Lower!")
+            guessLabel.text = "Lower! ⬇️"
         } else {
-            print("You win!")
+            showWinAlert()
+            guessLabel.text = "Guess the number"
             numberOfGuesses = 0
             generateRandomNumber()
         }
+        guessTextField.text = ""
+    }
+    
+    func showBoundsAlert() {
+        let alert = UIAlertController(title: "Warning!", message: "Your guess should be between 1 and 100!", preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(action)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func showWinAlert() {
+        let alert = UIAlertController(title: "Congrats! 🎉", message: "You won with a total of \(numberOfGuesses) guesses", preferredStyle: .alert)
+        let action = UIAlertAction(title: "Play again", style: .default, handler: nil)
+        alert.addAction(action)
+        self.present(alert, animated: true, completion: nil)
     }
 
 }
